@@ -1,0 +1,9 @@
+﻿[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Pp]ackages/
+.vs/
+*.userprefs
+*.lock.json
