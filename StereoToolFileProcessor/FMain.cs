@@ -106,6 +106,16 @@ namespace StereoToolFileProcessor
             string pathOrg = txtPathOrigin.Text;
             string pathDst = txtPathDestiny.Text;
 
+            //clear logs
+            txtLog.Clear();
+            txtLog.AppendText("-- initializing batch\r\n");
+
+            if (!Directory.Exists(pathOrg))
+            {
+                MessageBox.Show($"Orign folder do not exists!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             //list all files on the folder
             _lstFiles.Clear();
             FillFiles(pathOrg, "");
@@ -114,16 +124,24 @@ namespace StereoToolFileProcessor
             pbProgress.Maximum = _lstFiles.Count;
             pbProgress.Value = 0;
 
+            txtLog.AppendText($"-- {_lstFiles.Count} file(s) listed\r\n");
+
             //create the processor object
             var n = new MultiMp3STProcessor()
             {
                 MaxConcurrentProcesses = 4,
                 OutputPath = pathDst,
+                OrignBasePathLength = pathOrg.Length,
                 STConfigFile = txtStereotool.Text,
-                EncodeOptions = _lame_cfg
+                EncodeOptions = _lame_cfg,
+                SkipIfItExists = !ckbReplace.Checked
             };
             //event for progress
-            n.ProcessProgress += (s, e) => pbProgress.Value = n.InputPaths.Where(w => w.Done).Count();
+            n.ProcessProgress += (s, e) =>
+            {
+                pbProgress.Value = n.InputPaths.Where(w => w.Done).Count();
+                txtLog.AppendText($"{Path.GetFileName(e.Info.Path)} ... {(e.Info.Error ?? "OK")}\r\n");
+            };
 
             //add the files to process
             foreach (var a in _lstFiles)
@@ -134,6 +152,8 @@ namespace StereoToolFileProcessor
                 });
             }
 
+            txtLog.AppendText($"-- Processing..\r\n");
+
             //now execute all the process for all files
             await n.Execute(ct);
 
@@ -141,7 +161,14 @@ namespace StereoToolFileProcessor
             pbProgress.Value = 0;
             if ((_cts == null) || !_cts.IsCancellationRequested)
             {
-                MessageBox.Show("Process ended successfully!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (n.InputPaths.Any(w => w.Error != null))
+                {
+                    MessageBox.Show("Process ended with one or more errors!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Process ended successfully!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             else
             {
@@ -216,6 +243,8 @@ namespace StereoToolFileProcessor
                 tabConfigs.Enabled = false;
                 tabConverter.Enabled = false;
                 btnCancel.Visible = true;
+
+                tabSTC.SelectedIndex = 2;
 
                 await ExecuteConversion(_cts.Token);
             }

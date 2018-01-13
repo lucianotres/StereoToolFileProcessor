@@ -49,7 +49,11 @@ namespace StereoToolFileProcessor.Core
         /// </summary>
         public virtual void ValidateBeforeProcess()
         {
-
+            if (!File.Exists(_pr.StartInfo.FileName))
+            {
+                var n = Path.GetFileName(_pr.StartInfo.FileName);
+                throw new FileNotFoundException($"File \"{n}\" not found for processing!", n);
+            }
         }
 
         /// <summary>

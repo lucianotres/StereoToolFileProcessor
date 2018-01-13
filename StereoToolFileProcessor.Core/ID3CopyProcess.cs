@@ -26,6 +26,8 @@ namespace StereoToolFileProcessor.Core
 
         public override void ValidateBeforeProcess()
         {
+            base.ValidateBeforeProcess();
+
             if (string.IsNullOrEmpty(Origin))
                 throw new ArgumentException("Origin file path not informed!");
             if (string.IsNullOrEmpty(Destiny))
@@ -37,7 +39,7 @@ namespace StereoToolFileProcessor.Core
         /// </summary>
         protected override string GenerateArgs()
         {
-            return $"-2 -D \"{Origin}\" \"{Destiny}\"";
+            return $"-1 -2 -D \"{Origin}\" \"{Destiny}\"";
         }
 
     }

@@ -90,7 +90,7 @@ namespace StereoToolFileProcessor.Core
             _encoder.Origin = _stp.Destiny;
             _encoder.Destiny = Path.Combine(outputDir, Path.GetFileName(originPath));
             _id3.Origin = originPath; //initial mp3 file
-            _id3.Destiny = _stp.Destiny; //final processed mp3 file
+            _id3.Destiny = _encoder.Destiny; //final processed mp3 file
 
             //validate if all set
             _decoder.ValidateBeforeProcess();

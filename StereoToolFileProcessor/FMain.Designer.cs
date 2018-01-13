@@ -57,11 +57,14 @@
             this.btnPathOrigin = new System.Windows.Forms.Button();
             this.lblPathOrigin = new System.Windows.Forms.Label();
             this.tabSTC = new System.Windows.Forms.TabControl();
+            this.tabLog = new System.Windows.Forms.TabPage();
+            this.txtLog = new System.Windows.Forms.TextBox();
             this.tabConfigs.SuspendLayout();
             this.gbxBitrate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQuality)).BeginInit();
             this.tabConverter.SuspendLayout();
             this.tabSTC.SuspendLayout();
+            this.tabLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbProgress
@@ -294,9 +297,23 @@
             // 
             this.tabSTC.Controls.Add(this.tabConverter);
             this.tabSTC.Controls.Add(this.tabConfigs);
+            this.tabSTC.Controls.Add(this.tabLog);
             resources.ApplyResources(this.tabSTC, "tabSTC");
             this.tabSTC.Name = "tabSTC";
             this.tabSTC.SelectedIndex = 0;
+            // 
+            // tabLog
+            // 
+            this.tabLog.Controls.Add(this.txtLog);
+            resources.ApplyResources(this.tabLog, "tabLog");
+            this.tabLog.Name = "tabLog";
+            this.tabLog.UseVisualStyleBackColor = true;
+            // 
+            // txtLog
+            // 
+            resources.ApplyResources(this.txtLog, "txtLog");
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
             // 
             // FMain
             // 
@@ -317,6 +334,8 @@
             this.tabConverter.ResumeLayout(false);
             this.tabConverter.PerformLayout();
             this.tabSTC.ResumeLayout(false);
+            this.tabLog.ResumeLayout(false);
+            this.tabLog.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -350,6 +369,8 @@
         private System.Windows.Forms.Button btnPathOrigin;
         private System.Windows.Forms.Label lblPathOrigin;
         private System.Windows.Forms.TabControl tabSTC;
+        private System.Windows.Forms.TabPage tabLog;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }
 
