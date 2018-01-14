@@ -2,7 +2,7 @@
 
 Simple Windows application for tooling the batch processing with Thimeo Stereo Tool. It's like the official WatchCat tool but for free. The paid features are still licence needed. 
 
-Built version for donwload at: 
+Built version for donwload at: https://github.com/lucianotres/StereoToolFileProcessor/releases/latest
 
 ## Requirements
 
